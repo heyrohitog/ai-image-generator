@@ -3,6 +3,7 @@ import express from "express";
 import mongoose, { mongo } from "mongoose";
 import * as dotenv from "dotenv";
 import PostRouter from "./routes/Post.js";
+import { generateImage } from "./controllers/GenerateAIImage.js";
 
 dotenv.config();
 
@@ -22,7 +23,10 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-app.use("/api/post", PostRouter)
+
+app.use("/api/post", PostRouter);
+app.use("/api/generateImage", generateImage);
+
 // Default get
 
 app.get("/", async (req, res) => {

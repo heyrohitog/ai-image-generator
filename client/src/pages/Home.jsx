@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import SearchBar from "../components/SearchBar";
 import ImageCard from "../components/ImageCard";
+import { useState } from "react";
+import { CircularProgress } from "@mui/material";
+import { GetPosts } from "../api";
 
 const Container = styled.div`
   height: 100%;
@@ -64,24 +67,55 @@ const CardWrapper = styled.div`
 `;
 
 const Home = () => {
-  const item = {
-    photo: "https://img.getimg.ai/generated/img-2ptXJHOaJcMpf5JzW1aCM.jpeg",
-    author: "Google Images",
-    prompt: "AI Anime Girl",
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const getPosts = async () => {
+    setLoading(true);
+    await GetPosts()
+      .then((res) => {
+        setLoading(false);
+        setPosts(res?.data?.data);
+        setFilteredPosts(res?.data?.data);
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setLoading(false);
+      });
   };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   return (
     <Container>
       <Heading>Explore popular posts in the Community!</Heading>
       <Span>Generated with AI</Span>
       <SearchBar />
       <Wrapper>
-        <CardWrapper>
-          <ImageCard item={item} />
-          <ImageCard item={item} />
-          <ImageCard item={item} />
-          <ImageCard item={item} />
-          <ImageCard item={item} />
-        </CardWrapper>
+        {error && <div style={{ color: "red" }}>{error}</div>}
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <CardWrapper>
+            {filteredPosts.length === 0 ? (
+              <>No posts found</>
+            ) : (
+              <>
+                {filteredPosts
+                  .slice()
+                  .reverse()
+                  .map((item, index) => (
+                    <ImageCard key={index} item={item} />
+                  ))}
+              </>
+            )}
+          </CardWrapper>
+        )}
       </Wrapper>
     </Container>
   );
