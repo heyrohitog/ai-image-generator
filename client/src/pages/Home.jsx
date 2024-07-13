@@ -64,6 +64,11 @@ const CardWrapper = styled.div`
 `;
 
 const Home = () => {
+  const item = {
+    photo: "https://img.getimg.ai/generated/img-2ptXJHOaJcMpf5JzW1aCM.jpeg",
+    author: "Google Images",
+    prompt: "AI Anime Girl",
+  };
   return (
     <Container>
       <Heading>Explore popular posts in the Community!</Heading>
@@ -71,7 +76,11 @@ const Home = () => {
       <SearchBar />
       <Wrapper>
         <CardWrapper>
-          <ImageCard />
+          <ImageCard item={item} />
+          <ImageCard item={item} />
+          <ImageCard item={item} />
+          <ImageCard item={item} />
+          <ImageCard item={item} />
         </CardWrapper>
       </Wrapper>
     </Container>

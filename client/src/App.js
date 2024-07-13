@@ -3,7 +3,7 @@ import { darkTheme } from "./utils/Theme";
 import Home from "./pages/Home";
 import CreatePost from "./pages/CreatePost";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NavBar from "./components/NavBar";
+import Navbar from "./components/NavBar";
 
 const Container = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ function App() {
       <Container>
         <Wrapper>
           <BrowserRouter>
-            <NavBar />
+            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} exact />
               <Route path="/post" element={<CreatePost />} exact />

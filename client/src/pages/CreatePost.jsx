@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import GenerateForm from "../components/GenerateForm";
+import GenerateImage from "../components/GenerateImage";
 
 const Container = styled.div`
   height: 100%;
@@ -17,8 +19,41 @@ const Container = styled.div`
   }
 `;
 
+const Wrapper = styled.div`
+  width: 100%;
+  height: fit-content;
+  max-width: 1200px;
+  gap: 8%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
 const CreatePost = () => {
-  return <div>Create post</div>;
+  const [imageLoading, setImageLoading] = useState(false);
+  const [postLoading, setPostLoading] = useState(false);
+  const [post, setPost] = useState({
+    author: "",
+    prompt: "",
+    photo: "",
+  });
+  return (
+    <Container>
+      <Wrapper>
+        <GenerateForm
+          post={post}
+          setPost={setPost}
+          PostLoading={postLoading}
+          ImageLoading={imageLoading}
+          SetImageLoading={setImageLoading}
+          setPostLoading={setPostLoading}
+        />
+        <GenerateImage src={post?.photo} loading={imageLoading} />
+      </Wrapper>
+    </Container>
+  );
 };
 
 export default CreatePost;
