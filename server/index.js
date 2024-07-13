@@ -22,7 +22,7 @@ app.use((err, req, res, next) => {
     message,
   });
 });
-
+app.use("/api/post", PostRouter)
 // Default get
 
 app.get("/", async (req, res) => {
