@@ -4,7 +4,7 @@ import GenerateForm from "../components/GenerateForm";
 import GenerateImage from "../components/GenerateImage";
 
 const Container = styled.div`
-  height: 100%;
+  height: 100vh;
   overflow-y: scroll;
   background: ${({ theme }) => theme.bg};
   padding: 30px 30px;

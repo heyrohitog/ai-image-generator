@@ -25,7 +25,7 @@ const NavBar = () => {
   const path = location.pathname.split("/");
   return (
     <Container>
-      GenAI
+      Artist Hu Bhai
       {path[1] === "post" ? (
         <Button
           text="Explore Posts"

@@ -91,11 +91,33 @@ const Home = () => {
     getPosts();
   }, []);
 
+  // Search function
+  useEffect(() => {
+    if (!search) {
+      setFilteredPosts(posts);
+    }
+
+    const SearchFilteredPosts = posts.filter((post) => {
+      const promptMatch = post?.prompt
+        ?.toLowerCase()
+        .includes(search.toString().toLowerCase());
+      const authorMatch = post?.name
+        ?.toLowerCase()
+        .includes(search.toString().toLowerCase());
+
+      return promptMatch || authorMatch;
+    });
+
+    if (search) {
+      setFilteredPosts(SearchFilteredPosts);
+    }
+  }, [posts, search]);
+
   return (
     <Container>
       <Heading>Explore popular posts in the Community!</Heading>
       <Span>Generated with AI</Span>
-      <SearchBar />
+      <SearchBar search={search} setSearch={setSearch} />
       <Wrapper>
         {error && <div style={{ color: "red" }}>{error}</div>}
         {loading ? (

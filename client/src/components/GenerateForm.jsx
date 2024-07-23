@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Button from "./Button";
 import TextInput from "./TextInput";
 import { AutoAwesome, CreateRounded } from "@mui/icons-material";
-import { GenerateAIImage } from "../api";
+import { createPost, GenerateAIImage } from "../api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Form = styled.div`
   flex: 1;
@@ -51,6 +52,7 @@ const GenerateForm = ({
   SetImageLoading,
   setPostLoading,
 }) => {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const generateImageFun = async () => {
     SetImageLoading(true);
@@ -67,8 +69,17 @@ const GenerateForm = ({
         SetImageLoading(false);
       });
   };
-  const generatePostFun = () => {
+  const generatePostFun = async () => {
     setPostLoading(true);
+    await createPost(post)
+      .then((res) => {
+        setPostLoading(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setPostLoading(false);
+      });
   };
   return (
     <Form>
